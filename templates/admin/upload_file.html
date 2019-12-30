@@ -1,0 +1,41 @@
+{% extends "admin/layout.html" %}
+{% block content %}
+<div class="content-section">
+    <div class="col-md-12">
+    <form method="POST" action="" enctype="multipart/form-data">
+        {{ form1.hidden_tag() }}
+        <div class="form-group">
+            <div class="form-group">
+                {{ form1.file.label(class="custom-file-label") }}
+                {{ form1.file(class="custom-file-input") }}
+                {% if form1.file.errors %}
+                    {% for error in form1.file.errors %}
+                        <span class="text-danger">{{ error }}</span></br>
+                    {% endfor %}
+                {% endif %}
+            </div
+            <div class="form-group">
+                {% if form1.path.errors %}
+                    {{ form1.path(class="form-control is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form1.path.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon1">Path</span>
+                  </div>
+                    {{ form1.path(class="form-control") }}
+                </div>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                {{ form1.submit(class="btn btn-light btn-outline-dark mb-4") }}
+            </div>
+        </div>
+    </form>
+    </div>
+</div>
+{% endblock content %}

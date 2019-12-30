@@ -1,0 +1,185 @@
+{% extends "programming/article/layout.html" %}
+{% block content %}
+<article class="media content-section">
+  <div class="media-body" style="width: -webkit-fill-available;">
+    <div class="article-metadata">
+      <small class="text-dark">{{ article.date_posted.strftime('%Y-%m-%d') }}</small>
+      {% if article.tags %}
+      <small class="text-dark"> | </small>
+      {% for tag in article.tags.lower().split() %}
+      <a class="badge badge-light" href="{{ url_for('main.user_post_tag', tag=tag) }}">{{ tag }}</a>
+      {% endfor %}
+      {% else %}
+      {% endif %}
+    </div>
+    <h3>{{ article.title }}</h3>
+    <b>Introduction</b>
+
+    <p>A friend of mine Zanek, who is developing a website ‘Hacked Floorball’ which records and broadcasts in-depth information about the latest floorball games and tournaments around Melbourne. Zanek approached me to help with the data entry of some team and player information for an upcoming floorball tournament. After sending out a copy of a customized excel spreadsheet for all the teams involved in fill, Zanek needed an efficient way to get all the data from the spreadsheets onto his database once they were returned. This article is an in-depth walkthrough on what tools, resources and methods I used, along with what problems I faced when creating the required script in python.</p>
+
+    <b>What does the script actually need to do?</b>
+
+    <p>The script needs to retrieve data from a spreadsheet and upload that data to a MySQL server. The spreadsheet has a custom layout with effects to please the eye of the user who is inputting the data to it. The data needed to be organized and inserted to their respective tables - PlayerTable and TeamTable within the database. When inserting a player’s information to PlayerTable it would be assigned with an auto incremented ID which would then need to be returned to be inserted into TeamTable with the remaining data of that row.</p>
+
+    <pre>
+    <code>
+    import pymysql
+    import pymysql.cursors
+    import pandas as pd
+    </pre>
+    </code>
+
+    <b>Connecting to a MySQL server</b>
+
+    <p>Already having an idea of how I’d retrieve the data from the spreadsheet and organize it into data frames using pandas, I started by researching how to connect to a MySQL server. I found that if I use the pymysql module I can connect to the server with the following code:</p>
+    <pre>
+    <code>
+
+    hostname = [*HOSTNAME*]
+    username = [*USERNAME*]
+    password = [*USERNAME*]
+    database = [*DATABASE NAME*]
+    socket = [*SOCKET*]
+    port = [*PORT*]
+
+    dbConnection = pymysql.connect(host=hostname, port=port, user=username,
+                                   passwd=password, db=database, unix_socket=socket)
+
+    # Between making the connection object and closing it, I’d make my SQL queries on the database
+
+    dbConnection.close()
+
+    </code>
+    </pre>
+    <p>For other modules and their respective methods of connecting to a SQL server, check out https://www.a2hosting.com/kb/developer-corner/mysql/connecting-to-mysql-using-python</p>
+    <b>Retrieving the data</b>
+
+    <p>Using Pandas, I created a function to read the spreadsheet data in csv format and put it into a data frame, df, which I would then split into the two data frames player_df and team_df.</p>
+
+    <p>As the spreadsheet is customized, the table’s position wasn’t simply at index zero of df. Using the iloc function within pandas I was able to select the correct range of rows and columns (23:48, 5:12) where the data I was trying to retrieve was kept. Resulting in the following code:</p>
+    <pre>
+    <code>
+    def create_dataframes(spreadsheet_name):
+        data = pd.read_csv(spreadsheet_name + '.csv')
+        df = pd.DataFrame(data=data).iloc[23:48, 5:12]
+    </code>
+    </pre>
+    <p>From there I reset the index, input column names and divide df into player_df and team_df…</p>
+    <pre>
+    <code>
+        df.index = pd.RangeIndex(len(df.index))
+        df.columns = ['id', 'first_name', 'last_name', 'dob', 'shirt_no', 'captain', 'goalkeeper']
+
+        player_df = df.iloc[:len(df.index), 0:5]
+        team_df = df.iloc[:len(df.index), 5:8]
+
+        return df, player_df, team_df
+    </code>
+    </pre>
+    <i><b>Problem #1</b></i>
+
+    <p>Zanek and I would later find that users who input data to the spreadsheet like to move the position of the table. This lead me to write a function search_cell() that would help find the position of the table no matter where it was in the spreadsheet.</p>
+
+    <pre>
+    <code>
+    def search_cell(string, spreadsheet):
+        data = pd.read_csv(spreadsheet + '.csv')
+        df = pd.DataFrame(data)
+        df.columns = range(len(df.columns))
+        df.index = pd.RangeIndex(len(df.index))
+        print(df.index)
+        for i, column in enumerate(df):
+            for j, row in enumerate(df.index):
+                if df.iloc[i, j] == string:
+                    return i, j
+
+        print('Unable to read spreadsheet')
+        return None, None
+    </code>
+    </pre>
+    <p>search_cell() loops through each row of each column within df using enumerate to keep track of what column and row it’s up to, effectively returning the coordinates of each cell (i, j). search_cell() then plugs those coordinates into iloc and checks if the value within the selected cell matches the string of words you are looking for and returns those coordinates if true.</p>
+
+    <p>I then modified the create_dataframes() function to extract the data relative to the position returned by search_cell()…</p>
+    <pre>
+    <code>
+    def create_dataframes(spreadsheet):
+        data = pd.read_csv(spreadsheet + '.csv')
+        df = pd.DataFrame(data)
+
+        i = search_cell('First Name', spreadsheet)[0]
+        j = search_cell('First Name', spreadsheet)[1] + 1
+
+        df = pd.DataFrame(data=data).iloc[j:(j+25), i:(i+7)].reset_index(drop=True)
+        df.index = pd.RangeIndex(len(df.index))
+        df.columns = ['id', 'first_name', 'last_name', 'dob', 'shirt_no', 'captain', 'goalkeeper']
+
+        player_df = df.iloc[:len(df.index), 0:5]
+        team_df = df.iloc[:len(df.index), 5:8]
+
+        return df, player_df, team_df
+
+    </code>
+    </pre>
+    <b>Making queries</b>
+
+    <p>Now that I’ve managed to extract the data, I need to make a function to perform the necessary queries through my dbConnection, right? Initially I thought yes, so I made my queries() function…</p>
+
+    <pre>
+    <code>
+    def queries(conn, i, j, k, z, x, m, n):
+        cur = conn.cursor()
+
+        sql_playertable_query = "INSERT INTO `Players` (`FirstName`, `LastName`, `DateOfBirth`) VALUES (%s, %s, %s)"
+        cur.execute(sql_playertable_query, (i, j, k))
+
+        id = cur.lastrowid
+        # Using cur.execute("SELECT LAST_INSERT_ID() FROM Players") can prove harmful if there is a negative identity step.
+
+        sql_teamtable_query = "INSERT INTO `TeamList` (`PlayerID`, `TeamID`, `ShirtNumber`, `Captain`, `Goalkeeper`) VALUES (%s, %s, %s, %s, %s)"
+        cur.execute(sql_teamtable_query, (id, z, x, m, n))
+
+    </code>
+    </pre>
+    <i><b>Problem #2 - Part One</b></i>
+
+    <p>The structure of the code and method used here is completely fine, but it only works if the data I’m inserting is inserted as the correct data type and in the right format for the database to accept. I skipped the crucial step of parsing the data.</p>
+
+    <b>Parsing the data</b>
+
+    <p>WARNING: Any experienced python programmer will be fairly disappointed and possibly disgusted by the following. Because of this I won’t be going into much detail either.</p>
+
+    <p>With my lack of experience parsing data and the script due day approaching rapidly, I parsed the data by making for loops with an unnecessary amount of if statements for individual variables of data, doing the grunt work of modifying each if statement through trial and error. There are many instances where the logic of one if statement could’ve been applied to many with a function but I simply didn’t, believing that if I jump onto my first thought with would give me the time required.</p>
+
+    <p>As users ended up inputting dates in different string formats to each other, using the dateparser module I found on pypi proved most useful. The .parse() method within dateparser takes practically any format of a date as a string and puts it into aggregate form that I then reformatted using the .strftime() method.</p>
+
+    <pre>
+    <code>
+    import dateparser
+
+    k = dateparser.parse(d).strftime("%Y-%m-%d")
+
+    # d being a string value that represents a date.
+    </pre>
+    </code>
+    <p>Nothing ended up changing with regards to my queries() function.</p>
+
+    <i><b>Problem #2 - Part two</b></i>
+
+    <p>I also ran into the attribute error: ‘numpy.float64’ object has no attribute ‘translate’. In short, the solution was to add an encoder to allow for datatype float64, resulting in the following code:</p>
+
+    <pre>
+    <code>
+
+    pymysql.converters.encoders[np.float64] = pymysql.converters.escape_float
+    pymysql.converters.conversions = pymysql.converters.encoders.copy()
+    pymysql.converters.conversions.update(pymysql.converters.decoders)
+
+    </pre>
+    </code>
+
+    <p>I only have a partial understanding of what’s happening here. For more details behind what the attribute error is all about and why it requires this solution, go to:</p>
+
+    <p>https://stackoverflow.com/questions/46205532/numpy-float64-object-has-no-attribute-translate-inserting-value-to-mysql-in</p>
+
+</article>
+{% endblock content %}
