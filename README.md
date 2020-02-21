@@ -1,5 +1,5 @@
-# suss.space for software infastucture article
-suss.space for software infastucture article
+# suss.space repo for software infastucture article
+This repo is not for production purposes. This repo has been changed from the orginal private repo to maintain the integrity of the sites security. 
 
 www.suss.space
 
