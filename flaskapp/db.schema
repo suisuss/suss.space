@@ -1,0 +1,9 @@
+CREATE TABLE message(
+    id INTEGER NOT NULL,
+    name VARCHAR(20) NOT NULL,
+    email VARCHAR(30) NOT NULL,
+    body TEXT NOT NULL,
+    phone VARCHAR(15) NOT NULL,
+    date_submitted DATETIME NOT NULL,
+    PRIMARY KEY (id)
+);

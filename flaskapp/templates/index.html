@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags-->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>SUSS.SPACE</title>
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <!-- Bootstrap core CSS -->
+  <link href="static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Custom fonts for this template -->
+  <link href="static/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+  <link href='https://fonts.googleapis.com/css?family=Kaushan+Script' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700' rel='stylesheet' type='text/css'>
+
+  <!-- Custom styles for this template -->
+  <link href="static/css/index.min.css" rel="stylesheet">
+
+</head>
+
+<body id="page-top">
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
+    <div class="container">
+      <a class="navbar-brand js-scroll-trigger" href="#page-top">SUSS.SPACE - {{ year }}</a>
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        Menu
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav text-uppercase ml-auto">
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="#about">ABOUT</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="#programming">PROGRAMMING</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="#writing">WRITING</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="#contact">CONTACT</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Header -->
+  <header class="masthead">
+    <div class="container">
+      <div class="intro-text">
+        <div class="intro-heading text-uppercase">
+        <br></br>
+        <br></br>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- About -->
+  <section id="about">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12 text-center">
+          <h2 class="section-heading text-uppercase">About</h2>
+        </div>
+      </div>
+      <div>
+        <div class="team-member">
+          <img class="mx-auto rounded-circle" src="{{ image_file }}" alt="Photo of Jacob Sussmilch">
+          <h4>Jacob Sussmilch</h4>
+        </div>
+        <p>In this technological age we are the among the first generations to be apart of a newer, more detailed verison of our family trees. Given that, I hope for this site to become a focal point of information about myself parallel to my social media accounts.</p>
+        <p>Simply, the SUSS.SPACE project, serves as a platform to further express the development and completion of future projects. SUSS.SPACE is here to promote intentionality for myself. It's on this site that I will document the pursuit of my ambitions along with whatever else I choose to dabble in. It is the action of consciously documenting events that will facilitate learning and help develop a greater awareness for the activities I'm participating in.</p>
+        <hr></hr>
+        <p>The site currently has two major facets called 'spaces':</p>
+        <center><p><b>- <a class="js-scroll-trigger" href="#programming" style="color: black;">The programming space</a> -</b></p></center>
+        <p>In the programming space I’m creating a library of content on topics such as web development, computer and data science, networking and machine learning. I write articles on my completed projects and different aspects of programming.</p>
+        <center><p><b>- <a class="js-scroll-trigger" href="#writing" style="color: black;">The writing space</a> -</b></p></center>
+        <center><p><b>[CURRENTLY UNDER CONSTRUCTION]</b></p></center>
+        <p>As a philosophical person with a large advocacy for existentialism, I write on topics concerned with consumption, suffering, ambition and how these facets of life relate to identities, virtues and purposes in life. I'm trying to be precise and having almost failed VCE English, content for this section is released slowly.</p>
+        <hr></hr>
+        <p>Purpose in life isn't found, it's learnt - which I guess you could describe as an exercise of discovery - regardless, meaning is learnt through the creative and destructive practice of self-actualization, I built SUSS.SPACE to support and demostrate this belief. One must learn how to fulfil themselves as nothing truly lasts 🙃.</p>
+        <p>I hope you find something thought-provoking.</p>
+        <center><a style="color: black;" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">Extra</a></center>
+        <p></p>
+        <div class="collapse" id="collapseExample">
+            <p>This isn't some pathetic Weebly drag and drop built site made over the course of a weekend. This website was built from the ground up.</p>
+            <p>SUSS.SPACE was developed with a lightweight WSGI web application framework known as 'Flask'. The Flask application is run with Gunicorn in conjunction with Nginx on a Linux server over in Singapore. I access the server via SSH connection with a dedicated Raspberry Pi 2 to modify the site and it's content.</p>
+            <p>I came up with the idea of setting a website up like this back in October of 2018, as an aspiring programmer I knew I could learn a lot from deploying a website like this. I started putting my thought into action when I finally got a clue as to what the site would represent and the content it would hold, in March of 2019.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Programming -->
+  <section class="bg-light" id="programming">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12 text-center">
+          <h2 class="section-heading text-uppercase">Programming Space</h2>
+          <h3 class="section-subheading text-muted">Containing portfolio work and learning materials for programming.</h3>
+        </div>
+      </div>
+      <div class="row text-center">
+        <div class="col-md-4">
+          <i class="fas fa-pencil-ruler fa-4x" aria-hidden="true"></i>
+          <h4 class="service-heading">Projects</h4>
+        </div>
+        <div class="col-md-4">
+          <i class="fa fa-book fa-4x"></i>
+          <h4 class="service-heading">Resources & Articles</h4>
+        </div>
+        <div class="col-md-4">
+          <i class="fa fa-code fa-4x"></i>
+          <h4 class="service-heading">Snippets</h4>
+        </div>
+      </div>
+      <br></br>
+      <div class="col-lg-12 text-center">
+        <h3 class="section-heading text-uppercase">Langauges</h3>
+      </div>
+      <div class="row text-center">
+        <div class="col-md-4">
+          <i class="fab fa-python fa-6x"></i>
+          <h4 class="service-heading">Python</h4>
+        </div>
+        <div class="col-md-4">
+          <i class="fab fa-html5 fa-6x"></i>
+          <h4 class="service-heading">HTML</h4>
+        </div>
+        <div class="col-md-4">
+          <i class="fab fa-css3-alt fa-6x"></i>
+          <h4 class="service-heading">CSS</h4>
+        </div>
+      </div>
+      </div>
+    <br></br>
+    </div>
+    <center><a class="btn btn-primary btn-xl text-uppercase" href="#">FIND OUT MORE</a></center>
+  </section>
+
+  <!-- Writing -->
+  <section id="writing">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12 text-center">
+          <h2 class="section-heading text-uppercase">Writing Space</h2>
+        </div>
+      </div>
+      <div class="row text-center">
+        <div class="col-md-12">
+          <h3 class="section-heading text-uppercase">[CURRENTLY UNDER CONSTRUCTION]</h3>
+        </div>
+      </div>
+      <center><a class="btn btn-primary btn-xl text-uppercase" href="#">READ MORE</a></center>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12 text-center">
+          <h2 class="section-heading text-uppercase">Contact Me</h2>
+        </div>
+      </div>
+      {% with message = get_flashed_messages(with_categories=true) %}
+        {% if message %}
+          {% for category, message in message %}
+            <div class="alert alert-{{ category }}">
+              {{ message }}
+            </div>
+          {% endfor %}
+        {% endif %}
+      {% endwith %}
+      <div class="row">
+        <div class="col-lg-12">
+            <form method="POST">
+                <div class="row">
+                  <div class="col-md-6">
+                    {{ form.hidden_tag() }}
+                    <fieldset class="form-group">
+                      <div class="form-group">
+                          {% if form.name.errors %}
+                              {{ form.name(class="form-control form-control-lg is-invalid") }}
+                              <div class="invalid-feedback">
+                                  {% for error in form.name.errors %}
+                                      <span>{{ error }}</span>
+                                  {% endfor %}
+                              </div>
+                          {% else %}
+                              {{ form.name(class="form-control form-control-lg") }}
+                          {% endif %}
+                      </div>
+                      <div class="form-group">
+                          {% if form.email.errors %}
+                              {{ form.email(class="form-control form-control-lg is-invalid") }}
+                              <div class="invalid-feedback">
+                                  {% for error in form.email.errors %}
+                                      <span>{{ error }}</span>
+                                  {% endfor %}
+                              </div>
+                          {% else %}
+                              {{ form.email(class="form-control form-control-lg") }}
+                          {% endif %}
+                      </div>
+                      <div class="form-group">
+                          {% if form.phone.errors %}
+                              {{ form.phone(class="form-control form-control-lg is-invalid") }}
+                              <div class="invalid-feedback">
+                                  {% for error in form.phone.errors %}
+                                      <span>{{ error }}</span>
+                                  {% endfor %}
+                              </div>
+                          {% else %}
+                              {{ form.phone(class="form-control form-control-lg") }}
+                          {% endif %}
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                    <div class="form-groupe">
+                      {% if form.body.errors %}
+                          {{ form.body(class="form-control form-control-lg is-invalid") }}
+                          <div class="invalid-feedback">
+                              {% for error in form.body.errors %}
+                                  <span>{{ error }}</span>
+                              {% endfor %}
+                          </div>
+                      {% else %}
+                          {{ form.body(class="form-control form-control-lg") }}
+                      {% endif %}
+                    </div>
+                    </div>
+                  </fieldset>
+              </div>
+            </div>
+            </div>
+          <center>
+            <div class="form-group">
+            {{ form.submit(class="btn btn-primary btn-xl text-uppercase") }}
+            </div>
+          </center>
+        </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4">
+          <span class="copyright">Copyright &copy; SUSS.SPACE</span>
+        </div>
+        <div class="col-md-4">
+          <ul class="list-inline social-buttons">
+            <li class="list-inline-item">
+              <a href="https://www.instagram.com/seeing.suss">
+                <i class="fab fa-instagram"></i>
+              </a>
+            </li>
+            <li class="list-inline-item">
+              <a href="https://www.facebook.com/jacob.sussmilch">
+                <i class="fab fa-facebook-f"></i>
+              </a>
+            </li>
+          </ul>
+      </div>
+        <div class="col-md-4">
+          <ul class="list-inline quicklinks">
+            <li class="list-inline-item">
+              <a href="{{ url_for('main.privacy') }}">Privacy Policy</a>
+            </li>
+            <li class="list-inline-item">
+              <a href="{{ url_for('main.terms') }}">Terms of Use</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="static/vendor/jquery/jquery.min.js"></script>
+  <script src="static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Plugin JavaScript -->
+  <script src="static/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+  <!-- Custom scripts for this template -->
+  <script src="static/js/agency.min.js"></script>
+
+</body>
+
+</html>
