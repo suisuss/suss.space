@@ -6,6 +6,6 @@ api_bp = Blueprint('api', __name__)
 
 
 # Intializing API routes function used when intializing the app
-def initialize_api_routes(api):
+def initialise_api_routes(api):
     api.add_resource(MessagesAPI, '/api/messages')
     api.add_resource(MessageAPI, '/api/message/<int:message_id>')

@@ -17,8 +17,8 @@ def create_app(config_class=Config, api=api, ma=ma, db=db):
     app.config.from_object(Config)
 
     # Initializing API routes
-    from flaskapp.api.routes import initialize_api_routes
-    initialize_api_routes(api)
+    from flaskapp.api.routes import initialise_api_routes
+    initialise_api_routes(api)
 
     # Initiating app components
     db.init_app(app)
