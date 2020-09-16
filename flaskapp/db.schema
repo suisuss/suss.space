@@ -7,3 +7,14 @@ CREATE TABLE message(
     date_submitted DATETIME NOT NULL,
     PRIMARY KEY (id)
 );
+CREATE TABLE user(
+	id INTEGER NOT NULL,
+	username VARCHAR(20) NOT NULL,
+	email VARCHAR(120) NOT NULL,
+	image_file VARCHAR(20) NOT NULL,
+	password VARCHAR(60) NOT NULL,
+    api_password VARCHAR(60) NOT NULL,
+	PRIMARY KEY (id),
+	UNIQUE (username),
+	UNIQUE (email)
+);
