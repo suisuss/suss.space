@@ -28,9 +28,9 @@ class MessagesAPI(Resource):
     # Defining get to get messages according to their 'id' in acending order
     def get(self):
         messages = Message.query.order_by(Message.id.asc())
+        # dumping the message according to the message_schema
         return {'messages': messages_schema.dump(messages)}, 200  # respond with the data and a 200 approved message
 
-    @auth_required
     def delete(self):
         data = request.get_json(force=True)['message']
         message_id = data['id']
@@ -40,7 +40,6 @@ class MessagesAPI(Resource):
         ret = {'status': True, 'response': f'Deleted message, id={message.id}'}
         return ret, 201
 
-    @auth_required
     def put(self):
         data = request.get_json(force=True)['message']
         message_id = data['id']
@@ -54,15 +53,15 @@ class MessagesAPI(Resource):
         if data['phone'] != message.phone:
             message.phone = data['phone']
         db.session.commit()
-        ret = {'status': True, 'response': f'Updated user {user.username}, id={user.id}'}
+        ret = {'status': True, 'response': f'Updated message, id={message.id}'}
         return ret, 200
 
-    @auth_required
     def post(self):
         data = request.get_json(force=True)['message']
         message = Message(name=data['name'], email=data['email'], body=data['body'], phone=data['phone'])
         db.session.add(message)
         db.session.commit()
+        ret = {'status': True, 'response': f'Created message, id={message.id}'}
         return ret, 201
 
 
