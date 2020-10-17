@@ -1,7 +1,6 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
-from flask_minify import minify
 from .config import Config
 from flask_restful import Api
 from flask_marshmallow import Marshmallow
@@ -20,6 +19,10 @@ guard = Praetorian()
 login_manager = LoginManager()
 login_manager.login_view = 'admin.adminn'
 login_manager.login_message_category = 'info'
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.get(user_id)
 
 
 def create_app(config_class=Config, api=api, ma=ma, db=db):
@@ -52,8 +55,6 @@ def create_app(config_class=Config, api=api, ma=ma, db=db):
     app.register_blueprint(admin)
     app.register_blueprint(errors)
     app.register_blueprint(api_bp)
-
-    minify(app)
 
     return app
 

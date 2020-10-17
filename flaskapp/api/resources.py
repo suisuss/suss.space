@@ -106,7 +106,8 @@ class UserSchema(ma.SQLAlchemySchema):
 
 
 users_schema = UserSchema(many=True, only=("username", "password", "email"))
-user_schema = UserSchema(only=("username", "password", "email"))
+user_schema0 = UserSchema(only=("username", "password", "email", "id")) # For PUT
+user_schema1 = UserSchema(only=("username", "password", "email"))
 
 class UsersAPI(Resource):
     
@@ -118,7 +119,7 @@ class UsersAPI(Resource):
     def put(self):
         if data := request.get_json(force=True).get('user'):
             try:
-                validated_data = user_schema.load(data)
+                validated_data = user_schema0.load(data)
                 user_id = validated_data['id']
                 if user := User.query.filter_by(id=user_id).first():
                     hashed_password = bcrypt.generate_password_hash(validated_data['password']).decode('utf-8')
@@ -140,7 +141,7 @@ class UsersAPI(Resource):
     def post(self):
         if data := request.get_json(force=True).get('user'):
             try:
-                validated_data = user_schema.load(data)
+                validated_data = user_schema1.load(data)
                 hashed_password = bcrypt.generate_password_hash(validated_data['password']).decode('utf-8')
                 user = User(username=validated_data['username'], email=validated_data['email'], password=hashed_password, api_password=guard.hash_password(hashed_password))
                 db.session.add(user)
@@ -168,3 +169,4 @@ class UsersAPI(Resource):
             ret = ({'status': False, 'response': f'"user" not supplied'}, 400)
 
         return ret[0], ret[1]
+
